@@ -16,13 +16,23 @@ export class PostagemService {
   }
   refreshToken(){
     this.token ={
-      headers: new HttpHeaders().set('Autorization', environment.token),
+      headers: new HttpHeaders().set('Autorization', environment.token)
     }
   }
   getAllPostagens(): Observable<Postagem[]>{
     return this.http.get<Postagem[]>('https://blogavelina.herokuapp.com/postagens', this.token)
   }
+
+  getByIdPostagem(id: number): Observable<Postagem>{
+    return this.http.get<Postagem>(`https://blogavelina.herokuapp.com/postagens/${id}`, this.token)
+  }
   postPostagem(postagem: Postagem): Observable<Postagem>{
     return this.http.post<Postagem>('https://blogavelina.herokuapp.com/postagens', postagem, this.token)
+  }
+  putPostagem(postagem: Postagem): Observable<Postagem>{
+    return this.http.put<Postagem>('https://blogavelina.herokuapp.com/postagens', postagem, this.token)
+  }
+  deletePostagem(id: number){
+    return this.http.delete(`https://blogavelina.herokuapp.com/postagens/${id}`, this.token)
   }
 }
